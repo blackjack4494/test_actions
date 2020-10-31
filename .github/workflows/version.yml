@@ -61,5 +61,5 @@ jobs:
       - name: SHA2-256SUMS overview
         run: |
           echo ${{ needs.lol.outputs.sha2_lol }}
-          echo ${{ needs.lvl.env.SHA256_lvl }}
+          echo ${{ needs.lvl.steps.env.SHA256_lvl }}
     
