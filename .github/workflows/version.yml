@@ -46,7 +46,7 @@ jobs:
 
       - name: Get SHA2-256SUMS for lvl.txt
         id: sha2_file_lvl
-        run: echo "::set-output name=sha_lvl::${hashFiles('test2/lvl.txt'}"
+        run: echo "::set-output name=sha_lvl::${{hashFiles('test2/lvl.txt'}}"
         
 # This workflow contains a single job called "final"
   final:
