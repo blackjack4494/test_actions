@@ -78,8 +78,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.sha }}[0:7]
-          release_name: test_actions ${{ github.sha }}[0:7]
+          tag_name: ${{ github.sha[0:7] }}
+          release_name: test_actions ${{ github.sha[0:7] }}
           body: |
             test_actions
           draft: false
