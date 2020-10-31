@@ -61,7 +61,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: git_hash
-        run: echo "::set-output name=git7::${{ github.sha:0:7 }}"
+        run: echo "::set-output name=git7::${{github.sha}}|head -c 7"
       
       - name: SHA2-256SUMS overview
         run: |
