@@ -61,10 +61,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: SHA2-256SUMS overview
-        env:
-          SHA2_l1: ${{ needs.lol.outputs.sha2_lol }}
-          SHA2_l2: ${{ needs.lvl.outputs.sha2_lvl }}
         run: |
-          echo "$SHA2_l1 lol.txt"
-          echo "$SHA2_l2 lvl.txt"
+          echo ${{ needs.lol.outputs.sha2_lol }}
+          echo ${{ needs.lvl.outputs.sha2_lvl }}
     
