@@ -60,8 +60,11 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: git_hash
-        run: echo "::set-output name=git7::${{github.sha}}|head -c 7"
+      - name: Prepare Git hash
+        id: git_hash
+        run: |
+          git7=$(echo ${{github.sha}} | cut -c 1-7)
+          echo "::set-output name=git7::$git7"
       
       - name: SHA2-256SUMS overview
         run: |
@@ -83,8 +86,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.sha }}
-          release_name: test_actions ${{ github.sha }}
+          tag_name: ${{ steps.git_hash.outputs.git7 }}
+          release_name: test_actions ${{ outputs.git_sha }}
           body: |
             test_actions
           draft: false
