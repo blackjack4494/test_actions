@@ -48,7 +48,7 @@ jobs:
         id: sha2_file_lvl
         env:
           SHA256_lvl: ${{hashFiles('test2/lvl.txt')}}
-        run: echo "::set-output name=sha_lvl::${env:SHA256_lvl}" 
+        run: echo "::set-output name=sha_lvl::$SHA256_lvl" 
         
 # This workflow contains a single job called "final"
   final:
@@ -61,5 +61,5 @@ jobs:
       - name: SHA2-256SUMS overview
         run: |
           echo ${{ needs.lol.outputs.sha2_lol }}
-          echo ${{ needs.lvl.outputs }}
+          echo ${{ needs.lvl.outputs.sha2_lvl }}
     
