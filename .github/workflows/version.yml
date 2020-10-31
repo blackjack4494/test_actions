@@ -1,0 +1,70 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "lol"
+  lol:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    
+    outputs:
+      sha2_lol: ${{ steps.sha2_file_lol.outputs.sha_lol}}
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Get SHA2-256SUMS for lol.txt
+        id: sha2_file_lol
+        env:
+          SHA256_lol: ${{ hashFiles('test2/lol.txt') }}
+        run: echo "::set-output name=sha_lol::${env:SHA2}"
+        
+# This workflow contains a single job called "lvl"
+  lvl:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    
+    outputs:
+      sha2_lvl: ${{ steps.sha2_file_lvl.outputs.sha_lvl}}
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Get SHA2-256SUMS for lvl.txt
+        id: sha2_file_lvl
+        env:
+          SHA256_lvl: ${{ hashFiles('test2/lvl.txt') }}
+        run: echo "::set-output name=sha_lvl::${env:SHA2}"
+        
+# This workflow contains a single job called "final"
+  final:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: SHA2-256SUMS overview
+        env:
+          SHA2_l1: ${{ needs.lol.outputs.sha2_lol }}
+          SHA2_l2: ${{ needs.lvl.outputs.sha2_lvl }}
+        run: |
+          echo "$SHA2_l1 lol.txt"
+          echo "$SHA2_l2 lvl.txt"
+    
