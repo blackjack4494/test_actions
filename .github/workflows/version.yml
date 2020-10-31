@@ -29,7 +29,7 @@ jobs:
         id: sha2_file_lol
         env:
           SHA256_lol: ${{ hashFiles('test2/lol.txt') }}
-        run: echo "::set-output name=sha_lol::${env:SHA256_lol}"
+        run: echo "::set-output name=sha_lol::$SHA256_lol"
         
 # This workflow contains a single job called "lvl"
   lvl:
