@@ -74,9 +74,9 @@ jobs:
           SHA2_lo: ${{ needs.lol.outputs.sha2_lol }}
           SHA2_lv: ${{ needs.lvl.outputs.sha2_lvl }}
         run: |
-          echo "lol.txt:$SHA2_lo" >> SHA2-256SUMS
-          echo "lvl.txt:$SHA2_lv" >> SHA2-256SUMS
-          echo "random_Text" >> SHA2-256SUMS
+          echo "lol.txt:$SHA2_lo" >> SHA2-256SUMS.txt
+          echo "lvl.txt:$SHA2_lv" >> SHA2-256SUMS.txt
+          echo "random_Text" >> SHA2-256SUMS.txt
           
       - name: Create Release
         id: create_release
@@ -84,7 +84,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: test_actions tag ${{ steps.git_hash.outputs.git7 }}
+          tag_name: ${{ steps.git_hash.outputs.git7 }}
           release_name: test_actions release ${{ steps.git_hash.outputs.git7 }}
           body: |
             test_actions
