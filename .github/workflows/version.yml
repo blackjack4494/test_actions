@@ -55,6 +55,9 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     needs: [lol, lvl]
+    
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -100,4 +103,38 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./SHA2-256SUMS.txt
           asset_name: SHA2-256SUMS.txt
+          asset_content_type: text/html
+
+# This workflow contains a single job called "final"
+  final_win:
+    # The type of runner that the job will run on
+    runs-on: windows-latest
+    needs: final
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: SHA2-256SUMS overview
+        run: |
+          echo ${{ needs.lol.outputs.sha2_lol }}
+          echo ${{ needs.lvl.outputs.sha2_lvl }}
+
+      - name: Make some file
+        env:
+          SHA2_lo: ${{ needs.lol.outputs.sha2_lol }}
+          SHA2_lv: ${{ needs.lvl.outputs.sha2_lvl }}
+        run: |
+          echo "lol.txt:$SHA2_lo" >> some.txt
+          echo "lvl.txt:$SHA2_lv" >> some.txt
+          echo "random_Text" >> some.txt
+        shell: bash
+
+      - name: Upload some file
+        id: upload-sums
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.final.outputs.upload_url }}
+          asset_path: ./some.txt
+          asset_name: some.txt
           asset_content_type: text/html
