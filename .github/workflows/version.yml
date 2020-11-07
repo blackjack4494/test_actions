@@ -115,8 +115,8 @@ jobs:
     steps:
       - name: SHA2-256SUMS overview
         run: |
-          echo ${{ needs.lol.outputs.sha2_lol }}
-          echo ${{ needs.lvl.outputs.sha2_lvl }}
+          echo '${{ needs.lol.outputs.sha2_lol }}'
+          echo "${{ needs.lvl.outputs.sha2_lvl }}"
 
       - name: Make some file
         env:
