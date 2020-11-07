@@ -117,6 +117,7 @@ jobs:
         run: |
           echo ${{ needs.lol.outputs.sha2_lol }}
           echo ${{ needs.lvl.outputs.sha2_lvl }}
+        shell: bash
 
       - name: Make some file
         env:
