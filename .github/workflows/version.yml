@@ -117,17 +117,15 @@ jobs:
         run: |
           echo ${{ needs.lol.outputs.sha2_lol }}
           echo ${{ needs.lvl.outputs.sha2_lvl }}
-        shell: bash
 
       - name: Make some file
         env:
           SHA2_lo: ${{ needs.lol.outputs.sha2_lol }}
           SHA2_lv: ${{ needs.lvl.outputs.sha2_lvl }}
         run: |
-          echo "lol.txt:$SHA2_lo" >> some.txt
-          echo "lvl.txt:$SHA2_lv" >> some.txt
+          echo "lol.txt:${env:SHA2_lo}" >> some.txt
+          echo "lvl.txt:${env:SHA2_lv}" >> some.txt
           echo "random_Text" >> some.txt
-        shell: bash
 
       - name: Upload some file
         id: upload-sums
